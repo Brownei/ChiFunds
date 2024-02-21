@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SideBar from "@/components/SideBar";
-
 
 export const metadata: Metadata = {
   title: "Introducing ChiFunds: A Platform For Easy And Fast Payments",
@@ -16,12 +14,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className="flex h-screen w-full bg-gray-100">
-          <SideBar />
-          <div className="flex flex-col w-full h-full ml-64 p-4">
-            {children}
-          </div>
-        </div>
+        {children}
       </body>
     </html>
   );
