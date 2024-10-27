@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Introducing ChiFunds: A Platform For Easy And Fast Payments",
@@ -15,6 +16,7 @@ export default function RootLayout({
     <html>
       <body>
         {children}
+        <Toaster />
       </body>
     </html>
   );
