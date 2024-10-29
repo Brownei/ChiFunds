@@ -28,7 +28,7 @@ export function decryptData(privateKey: string, dataToBeDecrypted: string) {
     decrypt.setPrivateKey(privateKey)
 
     const d = decrypt.decrypt(dataToBeDecrypted) as string
-    return JSON.parse(d)
+    return d
 
   } else {
     return ""
