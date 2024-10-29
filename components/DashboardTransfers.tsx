@@ -6,9 +6,9 @@ const DashboardTransfers = () => {
   function iconsForTransactions(action: string) {
     switch (action) {
       case "sending":
-        return <Icon icon={''} />
+        return <Icon icon={'ri:arrow-left-fill'} color='red' />
       case "receiving":
-        return <Icon icon={''} />
+        return <Icon icon={'mynaui:arrow-right-solid'} color='green' />
       case "borrowing":
         return <Icon icon={''} />
     }

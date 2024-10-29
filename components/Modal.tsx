@@ -14,11 +14,12 @@ import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { useForm } from 'react-hook-form'
-import { arrangeMoneyFigures } from '@/lib/utils'
+import { arrangeMoneyFigures, encryptData } from '@/lib/utils'
 import { api, usingAnotherBearerRequest } from '@/lib/api'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useToast } from '@/hooks/use-toast'
 import Image from 'next/image'
+import { useKeyStore } from '@/hooks/use-public-key'
 
 export enum ErrorEnum {
   Oversabi,
@@ -29,6 +30,7 @@ const Modal = () => {
   const token = sessionStorage.getItem("token") as string
   const { toast } = useToast()
   const value = arrangeMoneyFigures(100000)
+  const { keys } = useKeyStore()
   const [successSection, setSuccessSection] = useState(false)
   const [errorSection, setErrorSection] = useState<"oversabi" | "rubbish" | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -37,13 +39,19 @@ const Modal = () => {
     mode: 'onSubmit'
   })
 
+  function encrytedData(data: any) {
+    return encryptData(keys.publicKey, {
+      amount: Number(data.amount),
+      explanation: data.explanation
+    })
+  }
+
   async function onSubmit(data: any) {
     console.log(data)
     setIsLoading(true)
     try {
       const response = await usingAnotherBearerRequest(token, "POST", "/transactions/borrow-money", {
-        amount: Number(data.amount),
-        explanation: data.explanation
+        data: encrytedData(data)
       })
       console.log(response.data)
       if (response.data.error) {
